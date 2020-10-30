@@ -1,7 +1,6 @@
 on:
     pull_request:
       types: [opened, synchronize]
-
   jobs:
     evaluator_job:
       name: Evaluator Job
