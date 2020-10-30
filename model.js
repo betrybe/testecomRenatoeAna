@@ -7,14 +7,13 @@ const crushReader = async () => {
 
 const crushWriter = async (file) => {
   await fs.writeFile('./crush.json', JSON.stringify(file), 'utf8', (err) =>
-    console.log(err)
-  );
+    console.log(err));
   return crushReader();
 };
 
 const postCrush = async (name, age, date) => {
   const crushList = await crushReader();
-  const newCrush = { name, age, id: crushList.length + 1, date }
+  const newCrush = { name, age, id: crushList.length + 1, date };
   crushList.push(newCrush);
   await crushWriter(crushList);
   return newCrush;
@@ -24,8 +23,7 @@ const findByName = async (q) => {
   const crushList = await crushReader();
   if (!q) return false;
   return crushList.filter((cr) =>
-    cr.name.toLowerCase().startsWith(q.toLowerCase())
-  );
+    cr.name.toLowerCase().startsWith(q.toLowerCase()));
 };
 
 const findById = async (id) => {

@@ -14,7 +14,7 @@ const url = 'http://localhost:3000';
 describe('2 - Crie o endpoint POST `/crush`', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(path.join(__dirname, 'seed.json'), 'utf8');
-  
+
     fs.writeFileSync(path.join(__dirname, '..', 'crush.json'), crushSeed, 'utf8');
   });
   it('Será validado que é possível cadastrar um crush com sucesso', async () => {
@@ -111,7 +111,7 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json.message).toBe(
-              'O "name" deve ter pelo menos 3 caracteres'
+              'O "name" deve ter pelo menos 3 caracteres',
             );
           });
       });
@@ -210,7 +210,7 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json.message).toBe(
-              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios'
+              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios',
             );
           });
       });
@@ -245,7 +245,7 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json.message).toBe(
-              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios'
+              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios',
             );
           });
       });
@@ -346,7 +346,7 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json.message).toBe(
-              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios'
+              'O campo "date" é obrigatório e "datedAt" e "rate" não podem ser vazios',
             );
           });
       });
@@ -381,7 +381,7 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json.message).toBe(
-              'O campo "datedAt" deve ter o formato "dd/mm/aaaa"'
+              'O campo "datedAt" deve ter o formato "dd/mm/aaaa"',
             );
           });
       });
@@ -426,26 +426,24 @@ describe('2 - Crie o endpoint POST `/crush`', () => {
           password: '12345678',
         },
       })
-      .then(() => {
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: 99999999,
-                'Content-Type': 'application/json',
-              },
+      .then(() => frisby
+        .setup({
+          request: {
+            headers: {
+              Authorization: 99999999,
+              'Content-Type': 'application/json',
             },
-          })
-          .post(`${url}/crush`, {
-            name: 'Zendaya Maree',
-            age: 24,
-            date: { rate: 5, datedAt: '20/10/2020' },
-          })
-          .expect('status', 401)
-          .then((responseCreate) => {
-            const { json } = responseCreate;
-            expect(json.message).toBe('Token inválido');
-          });
-      });
+          },
+        })
+        .post(`${url}/crush`, {
+          name: 'Zendaya Maree',
+          age: 24,
+          date: { rate: 5, datedAt: '20/10/2020' },
+        })
+        .expect('status', 401)
+        .then((responseCreate) => {
+          const { json } = responseCreate;
+          expect(json.message).toBe('Token inválido');
+        }));
   });
 });

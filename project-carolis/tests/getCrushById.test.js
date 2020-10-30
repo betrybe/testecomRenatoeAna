@@ -7,7 +7,7 @@ const url = 'http://localhost:3000';
 describe('4 - Crie o endpoint GET /crush/:id', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(path.join(__dirname, 'seed.json'), 'utf8');
-  
+
     fs.writeFileSync(path.join(__dirname, '..', 'crush.json'), crushSeed, 'utf8');
   });
   it('Será validado caso o token não seja encontrado retorne um código de status 401', async () => {
@@ -18,7 +18,7 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           password: '12345678',
         },
       })
-      .then(() => 
+      .then(() =>
         frisby
           .setup({
             request: {
@@ -32,8 +32,7 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           .then((responsePost) => {
             const { json } = responsePost;
             expect(json.message).toBe('Token não encontrado');
-          })
-      );
+          }));
   });
 
   it('Será validado que caso o token seja inválido retorne um código de status 404', async () => {
@@ -44,7 +43,7 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           password: '12345678',
         },
       })
-      .then((response) =>{
+      .then((response) => {
         const { body } = response;
         const result = JSON.parse(body);
         return frisby
@@ -61,8 +60,8 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           .then((response) => {
             const { json } = response;
             expect(json.message).toBe('Crush não encontrado');
-          })
-      })
+          });
+      });
   });
 
   it('Será validado que o endpoint deve retornar um crush baseado no id da rota. Devendo retornar o `status 200` ', async () => {
@@ -73,7 +72,7 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           password: '12345678',
         },
       })
-      .then((response) =>{
+      .then((response) => {
         const { body } = response;
         const result = JSON.parse(body);
         return frisby
@@ -90,12 +89,12 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           .then((responseGet) => {
             const { json } = responseGet;
             expect(json).toEqual({
-              "name": "Madonna",
-              "age": 62,
-              "id": 1,
-              "date": { "datedAt": "23/10/2020", "rate": 5 }
-            })
-          })
-        });
-    })
+              name: 'Madonna',
+              age: 62,
+              id: 1,
+              date: { datedAt: '23/10/2020', rate: 5 },
+            });
+          });
+      });
+  });
 });

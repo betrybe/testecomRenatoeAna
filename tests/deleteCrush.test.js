@@ -8,13 +8,13 @@ describe('6 - Crie o endpoint DELETE `/crush/:id`', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(
       path.join(__dirname, 'seed.json'),
-      'utf8'
+      'utf8',
     );
 
     fs.writeFileSync(
       path.join(__dirname, '..', 'crush.json'),
       crushSeed,
-      'utf8'
+      'utf8',
     );
   });
 
@@ -124,23 +124,21 @@ describe('6 - Crie o endpoint DELETE `/crush/:id`', () => {
           password: '12345678',
         },
       })
-      .then(() => {
-        return frisby
-          .setup()
-          .delete(`${url}/crush/${resultCrush.id}`, {
-            name: 'Zendaya',
-            age: 25,
-            date: {
-              datedAt: '24/10/2020',
-              rate: 4,
-            },
-          })
-          .expect('status', 401)
-          .then((responsePost) => {
-            const { json } = responsePost;
-            expect(json.message).toBe('Token não encontrado');
-          });
-      });
+      .then(() => frisby
+        .setup()
+        .delete(`${url}/crush/${resultCrush.id}`, {
+          name: 'Zendaya',
+          age: 25,
+          date: {
+            datedAt: '24/10/2020',
+            rate: 4,
+          },
+        })
+        .expect('status', 401)
+        .then((responsePost) => {
+          const { json } = responsePost;
+          expect(json.message).toBe('Token não encontrado');
+        }));
   });
 
   it('Será validado que não é possível deletar um crush com token inválido', async () => {

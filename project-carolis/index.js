@@ -14,7 +14,7 @@ app.use('/crush', crushRouter);
 
 app.post('/login', validateLoginEntries, rescue(async (req, res) => {
   const token = generateToken();
-  return res.status(200).json(token)
+  return res.status(200).json(token);
 }));
 
 app.listen(PORT, () => console.log(`Escutando na porta ${PORT}`));
