@@ -1,29 +1,20 @@
-const rescue = require('express-rescue');
 const express = require('express');
 const bodyParser = require('body-parser');
-const crypto = require('crypto');
-const router = require('./router');
-const validate = require('./middlewares/validate/index');
-const errorHandler = require('./middlewares/errorHandler');
+const rescue = require('express-rescue');
+const crushRouter = require('./crush/crushRouter');
+const { generateToken, validateLoginEntries } = require('./middlewares');
 
 const app = express();
 
+const PORT = 3000;
+
 app.use(bodyParser.json());
 
-app.post('/login', rescue(validate.login), (_req, res) => {
-  const token = crypto.randomBytes(8).toString('hex');
-  return res.status(200).json({ token });
-});
+app.use('/crush', crushRouter);
 
-app.use(rescue(validate.token));
+app.post('/login', validateLoginEntries, rescue(async (req, res) => {
+  const token = generateToken();
+  return res.status(200).json(token);
+}));
 
-app.use('/crush', rescue(router));
-
-app.use(errorHandler);
-
-// não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (request, response) => {
-  response.send();
-});
-
-app.listen(3000, () => console.log('e é isso'));
+app.listen(PORT, () => console.log(`Escutando na porta ${PORT}`));
