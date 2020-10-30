@@ -5,6 +5,12 @@ on:
     evaluator_job:
       name: Evaluator Job
       runs-on: ubuntu-18.04
+      services:
+        mongodb:
+          image: mongo
+          ports:
+            - "27017:27017"
+          options: -v ${{ github.workspace }}:/github/workspace
       steps:
         - uses: actions/checkout@v2
         - uses: actions/setup-node@v1.4.3	
@@ -15,12 +21,15 @@ on:
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
         - name: Evaluator step
-            id: evaluator
-            uses: betrybe/jest-evaluator-action@v6
-            with:
-              repository-test-name: 'betrybe/sd-0x-store-manager-tests'
-              repository-test-branch: 'main'
-              npm-start: true
+          id: evaluator
+          uses: betrybe/jest-evaluator-action@v5
+          with:
+            repository-test-name: 'betrybe/testecomRenatoeAna-testes'
+            repository-test-branch: 'main'
+            npm-start: true
+          env:
+            DB_URL: mongodb://mongodb:27017
+            DB_NAME: webchat
         - name: Store evaluation step
           uses: betrybe/store-evaluation-action@v2
           with:
