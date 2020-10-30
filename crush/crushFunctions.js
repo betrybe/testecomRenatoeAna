@@ -2,6 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const rescue = require('express-rescue');
 const cs = require('../crush.json');
+
 const readCrushsFile = async () => {
   const file = await fs.readFile(
     path.join(__dirname, '..', 'crush.json'),
@@ -9,7 +10,7 @@ const readCrushsFile = async () => {
     (err, data) => {
       if (err) return err;
       return data;
-    }
+    },
   );
 
   return JSON.parse(file);
@@ -20,7 +21,7 @@ const writeCrushsFile = async (file) => {
     path.join(__dirname, '..', 'crush.json'),
     JSON.stringify(file),
     'utf8',
-    (err) => err
+    (err) => err,
   );
   return readCrushsFile();
 };
@@ -50,8 +51,7 @@ const getCrushsByName = rescue(async (req, res) => {
 
   const filteredCrushs = crushs.filter(({ name }) => name.includes(q));
 
-  if (!filteredCrushs)
-    return res.status(404).json({ message: 'nome não encontrado' });
+  if (!filteredCrushs) return res.status(404).json({ message: 'nome não encontrado' });
 
   res.status(200).json(filteredCrushs);
 });
@@ -102,7 +102,7 @@ const deleteCrush = rescue(async (req, res) => {
 
   await writeCrushsFile(newCrushsList);
 
-  res.status(200).json({ message: "Crush deletado com sucesso"});
+  res.status(200).json({ message: 'Crush deletado com sucesso' });
 });
 
 module.exports = {

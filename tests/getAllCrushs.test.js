@@ -9,13 +9,13 @@ describe('3 - Crie o endpoint GET /crush', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(
       path.join(__dirname, 'seed.json'),
-      'utf8'
+      'utf8',
     );
 
     fs.writeFileSync(
       path.join(__dirname, '..', 'crush.json'),
       crushSeed,
-      'utf8'
+      'utf8',
     );
   });
 
@@ -42,8 +42,7 @@ describe('3 - Crie o endpoint GET /crush', () => {
           .then((responsePost) => {
             const { json } = responsePost;
             expect(json.message).toBe('Token inválido');
-          })
-      );
+          }));
   });
 
   it('Será validado que não é possível obter todos os crushs sem estar autorizado', async () => {
@@ -61,8 +60,7 @@ describe('3 - Crie o endpoint GET /crush', () => {
           .then((responsePost) => {
             const { json } = responsePost;
             expect(json.message).toBe('Token não encontrado');
-          })
-      );
+          }));
   });
 
   it('Será validado que o endpoint deve retornar um array com todos os crushs cadastrados', async () => {

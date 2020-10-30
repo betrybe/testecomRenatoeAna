@@ -1,9 +1,10 @@
 const rescue = require('express-rescue');
+
 const regex = /[^a-zA-Z0-9]+/g;
 
 const generateToken = () => {
   const initialToken = Math.random().toString(36).replace(regex, '');
-  const token = initialToken.length < 12 ? initialToken + '44444' : initialToken + '4444';
+  const token = initialToken.length < 12 ? `${initialToken}44444` : `${initialToken}4444`;
 
   return { token };
 };

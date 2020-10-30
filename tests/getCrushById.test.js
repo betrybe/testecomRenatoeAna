@@ -8,13 +8,13 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(
       path.join(__dirname, 'seed.json'),
-      'utf8'
+      'utf8',
     );
 
     fs.writeFileSync(
       path.join(__dirname, '..', 'crush.json'),
       crushSeed,
-      'utf8'
+      'utf8',
     );
   });
 
@@ -40,8 +40,7 @@ describe('4 - Crie o endpoint GET /crush/:id', () => {
           .then((responsePost) => {
             const { json } = responsePost;
             expect(json.message).toBe('Token não encontrado');
-          })
-      );
+          }));
   });
 
   it('Será validado que caso o token seja inválido retorne um código de status 404', async () => {

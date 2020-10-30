@@ -47,7 +47,7 @@ describe('1 - Crie o endpoint POST `/login`', () => {
         const { body } = response;
         const result = JSON.parse(body);
         expect(result.message).toBe(
-          'O "email" deve ter o formato "email@email.com"'
+          'O "email" deve ter o formato "email@email.com"',
         );
       });
   });
@@ -80,7 +80,7 @@ describe('1 - Crie o endpoint POST `/login`', () => {
         const { body } = response;
         const result = JSON.parse(body);
         expect(result.message).toBe(
-          'A "senha" deve ter pelo menos 6 caracteres'
+          'A "senha" deve ter pelo menos 6 caracteres',
         );
       });
   });

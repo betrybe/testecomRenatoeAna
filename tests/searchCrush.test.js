@@ -8,13 +8,13 @@ describe('7 - Crie o endpoint GET `/crush/search?q=searchTerm`', () => {
   beforeEach(() => {
     const crushSeed = fs.readFileSync(
       path.join(__dirname, 'seed.json'),
-      'utf8'
+      'utf8',
     );
 
     fs.writeFileSync(
       path.join(__dirname, '..', 'crush.json'),
       crushSeed,
-      'utf8'
+      'utf8',
     );
   });
 
@@ -86,7 +86,7 @@ describe('7 - Crie o endpoint GET `/crush/search?q=searchTerm`', () => {
                     rate: 4,
                   },
                 }),
-              ])
+              ]),
             );
           });
       });
@@ -100,23 +100,21 @@ describe('7 - Crie o endpoint GET `/crush/search?q=searchTerm`', () => {
           password: '12345678',
         },
       })
-      .then(() => {
-        return frisby
-          .setup()
-          .get(`${url}/crush/search?q=Ma`, {
-            name: 'Zendaya',
-            age: 25,
-            date: {
-              datedAt: '24/10/2020',
-              rate: 4,
-            },
-          })
-          .expect('status', 401)
-          .then((responsePost) => {
-            const { json } = responsePost;
-            expect(json.message).toBe('Token não encontrado');
-          });
-      });
+      .then(() => frisby
+        .setup()
+        .get(`${url}/crush/search?q=Ma`, {
+          name: 'Zendaya',
+          age: 25,
+          date: {
+            datedAt: '24/10/2020',
+            rate: 4,
+          },
+        })
+        .expect('status', 401)
+        .then((responsePost) => {
+          const { json } = responsePost;
+          expect(json.message).toBe('Token não encontrado');
+        }));
   });
 
   it('Será validado que não é possível fazer uma busca por termo com token inválido', async () => {
@@ -127,22 +125,20 @@ describe('7 - Crie o endpoint GET `/crush/search?q=searchTerm`', () => {
           password: '12345678',
         },
       })
-      .then(() => {
-        return frisby
-          .setup({
-            request: {
-              headers: {
-                Authorization: '99999999',
-                'Content-Type': 'application/json',
-              },
+      .then(() => frisby
+        .setup({
+          request: {
+            headers: {
+              Authorization: '99999999',
+              'Content-Type': 'application/json',
             },
-          })
-          .get(`${url}/crush/search?=Ma`)
-          .expect('status', 401)
-          .then((responsePost) => {
-            const { json } = responsePost;
-            expect(json.message).toBe('Token inválido');
-          });
-      });
+          },
+        })
+        .get(`${url}/crush/search?=Ma`)
+        .expect('status', 401)
+        .then((responsePost) => {
+          const { json } = responsePost;
+          expect(json.message).toBe('Token inválido');
+        }));
   });
 });
